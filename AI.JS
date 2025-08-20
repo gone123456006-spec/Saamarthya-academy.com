@@ -405,6 +405,19 @@ function startScanner() {
   html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
   html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 }
+
+async function startScanner() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" } }
+    });
+    document.querySelector("video").srcObject = stream;
+  } catch (err) {
+    alert("Camera access denied or not supported: " + err.message);
+  }
+}
+startScanner();
+
 function onScanFailure() { /* ignore */ }
 
 /* ---------- On Scan Success ---------- */
