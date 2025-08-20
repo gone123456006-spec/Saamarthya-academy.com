@@ -95,6 +95,38 @@
           <button class="clear" onclick="clearAttendance()">Clear Attendance</button>
         </div>
 
+
+
+<div id="scanner-box">
+  <video id="preview" autoplay playsinline style="width:100%;border:1px solid #ccc;"></video>
+  <p id="errorMsg" style="color:red; display:none;"></p>
+  <button id="requestBtn">📷 Start Scanner</button>
+<script>
+  const videoElement = document.getElementById("preview");
+  const errorMsg = document.getElementById("errorMsg");
+  const requestBtn = document.getElementById("requestBtn");
+
+  async function startCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: "environment" } }
+      });
+      videoElement.srcObject = stream;
+
+      errorMsg.style.display = "none";
+      requestBtn.style.display = "none";
+    } catch (err) {
+      errorMsg.innerText = "Camera error: " + err.message;
+      errorMsg.style.display = "block";
+      requestBtn.style.display = "inline-block";
+    }
+  }
+
+  requestBtn.addEventListener("click", startCamera);
+</script>
+
+
+
         <!-- Dashboard Overview -->
         <div class="dashboard-container">
           <h2>📊 Dashboard Overview</h2>
