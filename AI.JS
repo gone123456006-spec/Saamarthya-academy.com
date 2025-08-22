@@ -229,6 +229,8 @@ function initCalendar() {
   });
   calendar.render();
 }
+
+
 function buildCalendarEvents() {
   const events = [];
   // Prefer history; fallback to current attendance
@@ -282,6 +284,8 @@ function clearAttendance() {
   if (s) s.textContent = "";
   showPopup("Attendance cleared", "warning");
 }
+
+
 
 /* ---------- Email (server at localhost:3000) ---------- */
 function sendEmail(payload) {
@@ -406,19 +410,8 @@ function startScanner() {
   html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 }
 
-async function startScanner() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: { ideal: "environment" } }
-    });
-    document.querySelector("video").srcObject = stream;
-  } catch (err) {
-    alert("Camera access denied or not supported: " + err.message);
-  }
-}
-startScanner();
-
 function onScanFailure() { /* ignore */ }
+
 
 /* ---------- On Scan Success ---------- */
 function onScanSuccess(decodedText) {
@@ -604,21 +597,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (d.getDay() === 0 && d.getHours() === 18) generateWeeklyReports();
   }, 60 * 60 * 1000);
 });
-const express = require('express');
-const path = require('path');
-const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+/* 
+  Node.js backend code removed from frontend JS.
+  Please move the backend code to a separate file (e.g., server.js).
+*/
+const base = window.BACKEND_URL || "http://localhost:3000";
 
-// Default route
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.listen(PORT, () => {
-  console.log(Server running on port ${PORT});
-});
-
-
+function sendEmail(payload) {
+  return fetch(`${base}/send-email`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(r => r.json()).catch(err => ({ error: err?.message || String(err) }));
+}

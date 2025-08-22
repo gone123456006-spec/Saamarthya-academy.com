@@ -1,0 +1,1 @@
+window.BACKEND_URL = "https://<your-render-url>.onrender.com";
