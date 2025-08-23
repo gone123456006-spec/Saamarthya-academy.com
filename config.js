@@ -1,1 +1,1 @@
-window.BACKEND_URL = "https://<your-render-url>.onrender.com";
+window.BACKEND_URL = "https://saamarthya-academy-com-3.onrender.com";
