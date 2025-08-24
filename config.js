@@ -1,1 +1,0 @@
-window.BACKEND_URL = "https://saamarthya-academy-com-3.onrender.com";
